@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panier — Jeanova</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">Jeanova</h1>
+      <nav>
+        <a href="index.html">Accueil</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Ton panier</h2>
+    <div id="cart-contents"></div>
+    <div id="cart-summary"></div>
+    <div style="margin-top:12px">
+      <button id="checkout" class="btn">Passer la commande</button>
+    </div>
+  </main>
+
+  <script src="products.js"></script>
+  <script>
+    // Cart page script (simple)
+    function getCart(){ return JSON.parse(localStorage.getItem('jeanova_cart')||'[]'); }
+    function saveCart(c){ localStorage.setItem('jeanova_cart', JSON.stringify(c)); render(); }
+    function formatCurrency(a){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'XOF',maximumFractionDigits:0}).format(a); }
+
+    function render(){
+      const container = document.getElementById('cart-contents');
+      const summary = document.getElementById('cart-summary');
+      const cart = getCart();
+      if(cart.length===0){ container.innerHTML = '<p>Ton panier est vide.</p>'; summary.innerHTML=''; return; }
+      container.innerHTML = '';
+      let total = 0;
+      for(const it of cart){
+        total += it.price * it.qty;
+        const row = document.createElement('div');
+        row.style.display='flex';row.style.justifyContent='space-between';row.style.alignItems='center';
+        row.style.padding='8px 0'; row.innerHTML = `<div><strong>${it.title}</strong><br><small>${formatCurrency(it.price)} x ${it.qty}</small></div>
+          <div>
+            <button data-id="${it.id}" class="dec">-</button>
+            <button data-id="${it.id}" class="inc">+</button>
+            <button data-id="${it.id}" class="rm">Suppr</button>
+          </div>`;
+        container.appendChild(row);
+      }
+      summary.innerHTML = `<h3>Total : ${formatCurrency(total)}</h3>`;
+      // bind buttons
+      document.querySelectorAll('.inc').forEach(b=>b.onclick=()=>{ changeQty(b.dataset.id,1); });
+      document.querySelectorAll('.dec').forEach(b=>b.onclick=()=>{ changeQty(b.dataset.id,-1); });
+      document.querySelectorAll('.rm').forEach(b=>b.onclick=()=>{ removeItem(b.dataset.id); });
+    }
+
+    function changeQty(id,delta){
+      const cart = getCart();
+      const it = cart.find(x=>x.id===id);
+      if(!it) return;
+      it.qty += delta;
+      if(it.qty<=0) {
+        const i = cart.findIndex(x=>x.id===id); cart.splice(i,1);
+      }
+      saveCart(cart);
+    }
+    function removeItem(id){
+      const cart = getCart().filter(x=>x.id!==id);
+      saveCart(cart);
+    }
+
+    document.getElementById('checkout').addEventListener('click', ()=>{
+      const cart = getCart();
+      if(cart.length===0){ alert('Ton panier est vide.'); return; }
+      // build order email
+      let body = 'Bonjour,%0A%0AJe souhaite commander :%0A';
+      let total = 0;
+      cart.forEach(it=>{
+        body += `- ${it.title} x ${it.qty} : ${it.price} ${it.currency}%0A`;
+        total += it.price * it.qty;
+      });
+      body += `%0ATotal : ${total} XOF%0A%0ANom : %0APrénom : %0ATéléphone : %0AAdresse de livraison : %0A%0AMerci.%0A`;
+      const mail = 'contact@jeanova.com';
+      location.href = `mailto:${mail}?subject=Commande%20Jeanova&body=${body}`;
+    });
+
+    render();
+  </script>
+</body>
+</html>
