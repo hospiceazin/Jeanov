@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jeanova — Chaussures en jean</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">Jeanova</h1>
+      <nav>
+        <a href="index.html" class="active">Accueil</a>
+        <a href="#catalog">Catalogue</a>
+        <a href="about.html">À propos</a>
+        <a href="cart.html" class="cart-link">Panier (<span id="cart-count">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Section hero immersive -->
+  <section class="hero-banner">
+    <div class="hero-overlay">
+      <h2>L’élégance du jean,<br>le confort d’une chaussure</h2>
+      <p>Découvrez nos créations artisanales uniques en jean recyclé</p>
+      <a href="#catalog" class="btn">Découvrir la collection</a>
+    </div>
+  </section>
+
+  <!-- Best sellers -->
+  <section class="best-sellers container">
+    <h3>Nos Best Sellers</h3>
+    <div class="products-grid" id="best-seller-grid"></div>
+  </section>
+
+  <!-- Catalogue complet -->
+  <section id="catalog" class="catalog container">
+    <h3>Catalogue complet</h3>
+    <div id="products" class="products-grid"></div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <h4>Reste informé</h4>
+    <form id="newsletter-form">
+      <input type="email" id="newsletter-email" placeholder="Ton e-mail" required />
+      <button type="submit">S'inscrire</button>
+    </form>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Jeanova — Tous droits réservés.</p>
+      <p>Contact : <a href="mailto:contact@jeanova.com">contact@jeanova.com</a></p>
+    </div>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
