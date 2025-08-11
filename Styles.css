@@ -1,0 +1,63 @@
+/* HERO SECTION */
+.hero-banner {
+  position: relative;
+  height: 80vh;
+  background: url('images/hero-jeanova.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-overlay {
+  background: rgba(0,0,0,0.45);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+}
+.hero-overlay h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  animation: fadeInDown 1s ease;
+}
+.hero-overlay p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  animation: fadeInUp 1s ease;
+}
+.hero-overlay .btn {
+  background: #d97706;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+.hero-overlay .btn:hover {
+  background: #b45309;
+}
+
+/* BEST SELLERS */
+.best-sellers {
+  margin: 40px 0;
+}
+.best-sellers h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInDown {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.products-grid .card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.products-grid .card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
